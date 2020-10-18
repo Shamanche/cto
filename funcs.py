@@ -1,5 +1,8 @@
 import requests
-from utils import *
+##from utils import *
+
+def squeezed (client_name):
+    return client_name.replace('Индивидуальный предприниматель', 'ИП')
 
 def get_kkm_filled_fn(max_fill=75):
 ## возвращает список ККМ с ФН заполненными больше max_fill в %
