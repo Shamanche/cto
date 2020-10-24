@@ -4,8 +4,8 @@ import requests
 def squeezed (client_name):
     return client_name.replace('Индивидуальный предприниматель', 'ИП')
 
-def get_kkm_filled_fn(max_fill=75):
-## возвращает список ККМ с ФН заполненными больше max_fill в %
+def get_kkm_filled_fn(max_fill=80):
+## возвращает список ККМ с заполнением ФН больше max_fill в %
     LOGIN_URL = 'https://pk.platformaofd.ru/auth/login'
     API_URL = 'https://pk.platformaofd.ru/api/monitoring'
 
