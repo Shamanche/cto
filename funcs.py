@@ -1,5 +1,4 @@
 import requests
-##from utils import *
 
 def squeezed (client_name):
     return client_name.replace('Индивидуальный предприниматель', 'ИП')
@@ -46,3 +45,4 @@ def get_kkm_filled_fn(max_fill=80):
 ##print(f'ККМ с заполненностью ФН выше {max_fill}%.')
 ##for k in x:
 ##    print(f"{k['fnSpaceUsed']:4} {k['deviceName'][:37]:39} {squeezed(k['clientName'])[:30]:31}")
+
