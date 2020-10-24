@@ -40,8 +40,9 @@ def get_kkm_filled_fn(max_fill=75):
             kkm_with_filled_fn.append(kkm)
     return kkm_with_filled_fn
 
-max_fill = 75
-x = get_kkm_filled_fn(max_fill)
-print(f'ККМ с заполненностью ФН выше {max_fill}%.')
-for k in x:
-    print(f"{k['fnSpaceUsed']:4} {k['deviceName'][:37]:39} {squeezed(k['clientName'])[:30]:31}")
+
+##max_fill = 75
+##x = get_kkm_filled_fn(max_fill)
+##print(f'ККМ с заполненностью ФН выше {max_fill}%.')
+##for k in x:
+##    print(f"{k['fnSpaceUsed']:4} {k['deviceName'][:37]:39} {squeezed(k['clientName'])[:30]:31}")
