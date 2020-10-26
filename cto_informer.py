@@ -2,6 +2,8 @@ from flask import Flask
 from funcs import * 
 from flask_mail import Mail, Message
 
+# new branch
+
 # адреса почты, кому будет приходить уведомление
 RECIPIENTS = [
     'td@21smart.ru',
