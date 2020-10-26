@@ -1,5 +1,5 @@
 from flask import Flask
-from funcs import *
+from funcs import * 
 from flask_mail import Mail, Message
 
 # адреса почты, кому будет приходить уведомление
