@@ -1,27 +1,51 @@
 from flask import Flask
-from funcs import * 
+#from funcs import *
 from flask_mail import Mail, Message
-
-# new branch
+import requests
 
 # адреса почты, кому будет приходить уведомление
 RECIPIENTS = [
     'td@21smart.ru',
     'tsvet005@yandex.ru']
 
-app = Flask(__name__)
-app.config['MAIL_SERVER'] = 'smtp.yandex.ru'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'informersmart@yandex.ru'
-app.config['MAIL_DEFAULT_SENDER'] = 'informersmart@yandex.ru'
-app.config['MAIL_PASSWORD'] = 'Smart620514'
+def squeezed (client_name):
+    return client_name.replace('Индивидуальный предприниматель', 'ИП')
 
-@app.route('/', methods=['get'])
-def index():
-    message = "Hi! It is CTO - Informer."
-    return message
+def get_kkm_filled_fn(max_fill=80):
+## возвращает список ККМ с заполнением ФН больше max_fill в %
+    LOGIN_URL = 'https://pk.platformaofd.ru/auth/login'
+    API_URL = 'https://pk.platformaofd.ru/api/monitoring'
+
+    session = requests.Session()
+    print('-= подключение к серверу =-')
+    session.get(LOGIN_URL)
+
+    login_data = {
+        'email': 'efimova@21smart.ru',
+        'password': 'smart620514',
+        'username': 'efimova@21smart.ru',
+        'phone':''}
+
+    print('-= авторизация =-')
+    session.post(LOGIN_URL, data=login_data)
+
+    # запрос всех ККМ, кроме архивных (headers обязательно !)
+    headers = {'Content-Type': 'application/json;charset=UTF-8'}
+    payload = '{"badgeId":17,"type":"terminal","filterValues":[],"withArchive":0}'
+    print('-= получение данных с сервера =-')
+    r = session.post (API_URL, data=payload, headers=headers)
+
+    data_from_api = r.json()
+    all_kkm_list = data_from_api['result']['data']
+    kkm_quanity = len(all_kkm_list)
+
+    print('-= обработка данных =-')
+    kkm_with_filled_fn = []
+    for kkm in all_kkm_list:
+        fn_used = int(kkm['fnSpaceUsed'].strip("'%"))
+        if fn_used >= max_fill:
+            kkm_with_filled_fn.append(kkm)
+    return kkm_with_filled_fn
 
 def send_mail(title, body, html=''):
     with app.app_context():
@@ -66,6 +90,20 @@ def check_fn_fill():
     send_mail(title=title, body=text)
     return
 
-if __name__ == '__main__':
-    check_fn_fill()
-    app.run(debug=False)
+app = Flask(__name__)
+app.config['MAIL_SERVER'] = 'smtp.yandex.ru'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'informersmart@yandex.ru'
+app.config['MAIL_DEFAULT_SENDER'] = 'informersmart@yandex.ru'
+app.config['MAIL_PASSWORD'] = 'Smart620514'
+
+current_date = datetime.datetime.now()
+print('Текущий день недели: ',current_date.isoweekday())
+if current_date.isoweekday() == 4:
+
+
+##if __name__ == '__main__':
+##    check_fn_fill()
+##    app.run(debug=False)
