@@ -2,6 +2,7 @@ from flask import Flask
 #from funcs import *
 from flask_mail import Mail, Message
 import requests
+import datetime
 
 # адреса почты, кому будет приходить уведомление
 RECIPIENTS = [
