@@ -7,7 +7,8 @@ import datetime
 # адреса почты, кому будет приходить уведомление
 RECIPIENTS = [
     'td@21smart.ru',
-    'tsvet005@yandex.ru']
+    'tsvet005@yandex.ru',
+    'efimova@21smart.ru']
 
 def squeezed (client_name):
     return client_name.replace('Индивидуальный предприниматель', 'ИП')
