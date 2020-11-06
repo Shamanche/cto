@@ -103,7 +103,7 @@ app.config['MAIL_PASSWORD'] = 'Smart620514'
 
 current_date = datetime.datetime.now()
 print('Текущий день недели: ',current_date.isoweekday())
-if current_date.isoweekday() == 3:
+if current_date.isoweekday() == 1:
 #if current_date.isoweekday() in [1, 2, 3, 4, 5, 6, 0]:
     check_fn_fill()
 
